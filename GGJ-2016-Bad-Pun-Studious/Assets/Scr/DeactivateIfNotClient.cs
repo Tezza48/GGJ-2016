@@ -10,14 +10,13 @@ public class DeactivateIfNotClient : NetworkBehaviour {
     // Use this for initialization
     void Start()
     {
-        foreach (GameObject currentObject in objectsToRemove)
-        {
-            currentObject.SetActive(isLocalPlayer);
-        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-	
+        foreach (GameObject currentObject in objectsToRemove)
+        {
+            currentObject.SetActive(isLocalPlayer);
+        }
 	}
 }

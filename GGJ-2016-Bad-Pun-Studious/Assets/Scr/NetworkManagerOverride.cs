@@ -1,24 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class NetworkManagerOverride : NetworkManager {
-    public GameObject ghostPrefab;
+
+    ManagerMod managerMod;
+
+    public void JoinGame()
+    {
+        StartClient();
+    }
+
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+    }
+
+    public override void OnStartHost()
+    {
+        base.OnStartHost();
+    }
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
+        managerMod = GetComponent<ManagerMod>();
+
+        bool playerHasSpawned = managerMod.playerHasSpawned; 
+
         GameObject newPlayerPrefab;
 
-        var tempPlayer = GameObject.FindGameObjectWithTag("Player");
-
-        if (tempPlayer == null)
+        if (!playerHasSpawned)
         {
-            newPlayerPrefab = playerPrefab;
+            newPlayerPrefab = spawnPrefabs[0];
+            managerMod.playerHasSpawned = true;
         }
         else
         {
-            newPlayerPrefab = ghostPrefab;
+            newPlayerPrefab = spawnPrefabs[1];
         }
 
         var player = (GameObject)GameObject.Instantiate(newPlayerPrefab, Vector3.zero, Quaternion.identity);

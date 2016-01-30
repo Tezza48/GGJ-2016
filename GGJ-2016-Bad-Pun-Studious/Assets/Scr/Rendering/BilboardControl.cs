@@ -20,6 +20,6 @@ public class BilboardControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        bilboardRotation = Quaternion.LookRotation(transform.localPosition, Vector3.up);
+        bilboardRotation = Quaternion.LookRotation(-transform.localPosition, Vector3.up);
 	}
 }
