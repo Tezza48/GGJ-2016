@@ -3,27 +3,13 @@ using System.Collections;
 
 public class BilboardControl : MonoBehaviour {
 
-    private static Vector3 targetLook;
-    private static Vector3 targetUp;
+    private static Quaternion bilboardRotation;
 
-    public static Vector3 TargetLook
+    public static Quaternion BilboardRotation
     {
         get
         {
-            return targetLook;
-        }
-    }
-
-    public static Vector3 TargetUp
-    {
-        get
-        {
-            return targetUp;
-        }
-
-        set
-        {
-            targetUp = value;
+            return bilboardRotation;
         }
     }
 
@@ -34,7 +20,6 @@ public class BilboardControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        targetLook = transform.localPosition;
-        targetUp = transform.up;
+        bilboardRotation = Quaternion.LookRotation(transform.localPosition, Vector3.up);
 	}
 }
