@@ -12,4 +12,14 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+
+        if (Input.GetButtonDown("Use") && other.tag == "Portal")
+        {
+            transform.position = other.GetComponent<PortalEntrance>().exit.position;
+        }
+    }
 }
