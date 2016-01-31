@@ -24,5 +24,9 @@ public class HostPlayer : NetworkBehaviour  {
 
             rigid.velocity = moveDir.normalized * speed;
         }
+        else
+        {
+
+        }
     }
 }
