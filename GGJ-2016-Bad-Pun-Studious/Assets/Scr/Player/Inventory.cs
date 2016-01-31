@@ -3,7 +3,8 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Inventory : NetworkBehaviour {
+public class Inventory : NetworkBehaviour
+{
 
     private string[] inventoryNames = new string[]
     {
@@ -16,30 +17,35 @@ public class Inventory : NetworkBehaviour {
         "teapot"
     };
 
+    public List<bool> inventoryValues;
 
-    public SyncListBool inventoryValues;
+    // Use this for initialization
+    void Start()
+    {
+        for (int i = 0; i < inventoryNames.Length; i++)
+        {
+            inventoryValues.Add(false);
+        }
+    }
 
-	// Use this for initialization
-	void Start ()
+    // Update is called once per frame
+    void Update()
     {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (Input.GetButtonUp("Use") && other.CompareTag("Item"))
+        if (Input.GetButtonDown("Use") && other.tag == "Item")
         {
+            print("Triggered!");
             for (int i = 0; i < inventoryNames.Length; i++)
             {
-                if (inventoryNames[i].Equals(other.name))
+                if (inventoryNames[i].ToLower().Equals(other.name.ToLower()))
                 {
                     inventoryValues[i] = true;
-                    Network.Destroy(other.gameObject);
+                    other.GetComponent<NetworkDestroyable>().destroy = true;
+                    Debug.Log("Destroying " + other.name + ".");
                     break;
                 }
             }
