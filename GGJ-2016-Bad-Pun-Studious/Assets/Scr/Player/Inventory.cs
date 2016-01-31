@@ -15,14 +15,16 @@ public class Inventory : NetworkBehaviour {
         "teabag",
         "teapot"
     };
-
-
-    public SyncListBool inventoryValues;
+    
+    public List<bool> inventoryValues;
 
 	// Use this for initialization
 	void Start ()
     {
-
+        for (int i = 0; i < inventoryNames.Length; i++)
+        {
+            inventoryValues.Add(false);
+        }
     }
 	
 	// Update is called once per frame
@@ -32,14 +34,16 @@ public class Inventory : NetworkBehaviour {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (Input.GetButtonUp("Use") && other.CompareTag("Item"))
+        if (Input.GetButtonDown("Use") && other.tag == "Item")
         {
+            print("Triggered!");
             for (int i = 0; i < inventoryNames.Length; i++)
             {
-                if (inventoryNames[i].Equals(other.name))
+                if (inventoryNames[i].ToLower().Equals(other.name.ToLower()))
                 {
                     inventoryValues[i] = true;
-                    Network.Destroy(other.gameObject);
+                    other.GetComponent<NetworkDestroyable>().destroy = true;
+                    Debug.Log("Destroying " + other.name + ".");
                     break;
                 }
             }
