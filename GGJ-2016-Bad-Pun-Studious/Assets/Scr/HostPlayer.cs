@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(Rigidbody2D))]
 public class HostPlayer : NetworkBehaviour  {
 
-    private float speed = 5;
+    public float speed = 5;
     private Rigidbody2D rigid;
 
 	// Use this for initialization
